@@ -1,0 +1,91 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<iostream>
+#include<string.h>
+
+using namespace std;
+
+class emp
+{
+	static int id;
+	char name[20];
+	double sal;
+	
+	public:
+		
+		friend void operator<<(ostream& o,emp& e);
+		
+	/*	emp()
+		{
+			//this->id=0;
+			strcpy(this->name,"not given");
+			this->sal=0;
+		}
+		
+		emp(int i,char*nm,double s)
+		{
+			//this->id=i;
+			strcpy(this->name,nm);
+			this->sal=s;
+		}
+      */
+		
+		void setid(int i)
+		{
+			this->id=i;
+			
+		}
+		void setname(char*nm)
+		{
+			strcpy(this->name,nm);
+		}
+		void setsal(double s)
+		{
+			this->sal=s;
+		}
+		
+		void static setid()
+		{
+			id++;
+		}
+		
+	/*	void display()
+		{
+			cout<<"\n"<<this->id<<"\t"<<this->name<<"\t"<<this->sal;
+		}
+	*/	
+		
+}; //class End Here
+int emp::id=101;
+
+void operator<<(ostream& o,emp& e)
+		{
+			o<<"\n"<<e.id++<<"\t"<<e.name<<"\t"<<e.sal;
+		}
+
+
+
+int main()
+{
+	emp *ptr;
+	int i,n,id;
+	char name[20];
+	double sal;
+	cout<<"Enter size of an Array\t";
+	cin>>n;
+	ptr=new emp[n];
+	for(i=0;i<n;i++)
+	{
+		cout<<"\n"<<"Enter Employee Name\t";
+		cin>>name;
+		cout<<"\n"<<"Enter Employee salary\t";
+		cin>>sal;
+	//	ptr[i].setid(id);
+		ptr[i].setname(name);
+		ptr[i].setsal(sal);
+	}
+	for(i=0;i<n;i++)
+	{
+		cout<<ptr[i];
+	}
+}

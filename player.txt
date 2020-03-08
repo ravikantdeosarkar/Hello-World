@@ -1,0 +1,330 @@
+#include<iostream>
+#include<string.h>
+#include<stdio.h>
+
+using namespace std;
+class player
+{
+	int p_id;
+	char p_name[20];
+	char p_role[20];
+	int p_runs;
+	int p_wickets;
+	int p_inning;
+
+
+public:
+
+	player()
+	{
+		this->p_id = 0;
+		strcpy(this->p_name, "not given");
+		strcpy(this->p_role, "not given");
+		this->p_runs = 0;
+		this->p_wickets = 0;
+		this->p_inning = 0;
+	}
+
+
+	player(int id, char* nm, char* ro, int ru, int wi, int in)
+	{
+
+		this->p_id = id;
+		strcpy(this->p_name, nm);
+		strcpy(this->p_role, ro);
+		this->p_runs = ru;
+		this->p_wickets = wi;
+		this->p_inning = in;
+
+	}
+
+
+
+	void setp_id(int a)
+	{
+		 this->p_id=a;
+
+	}
+
+	void setp_name(char *a)
+	{
+		strcpy(this->p_name, a);
+
+	}
+
+	void setp_role(char *a)
+	{
+		strcpy(this->p_role, a);
+	}
+
+	void setp_runs(int a)
+	{
+		this->p_runs = a;
+	}
+
+
+	void setp_wickets(int a)
+	{
+		this->p_wickets = a;
+	}
+
+
+	void setp_inning(int a)
+	{
+		this->p_inning = a;
+	}
+
+	int getp_id()
+	{
+		return p_id;
+	}
+
+	char* getp_name()
+	{
+		return p_name;
+	}
+
+	char* getp_role()
+	{
+		return p_role;
+	}
+
+	int getp_runs()
+	{
+		return p_runs;
+	}
+
+
+	int getp_wickets()
+	{
+		return p_wickets;
+	}
+
+
+	int getp_inning()
+	{
+		return p_inning;
+	}
+
+       friend void operator<<(ostream&, player&);
+	friend void operator>>(istream&, player&);
+
+
+};
+
+
+
+
+
+void maximum(player* , int);
+void maximum_r(player* , int );
+void search_name(player* , int );
+void search_id(player* , int );
+
+int main()
+{
+	int id, runs, wkts, played;
+	char nm[20], ro[20];
+	int j, n;
+	player *p;
+	p = new player[10];
+	cout << "Enter the no of players:";
+	cin >> n;
+
+	for (j = 0; j < n; j++)
+	{
+
+		operator>>(cin, p[j]);
+
+	}
+	for (j = 0; j < n; j++)
+	{
+		operator<<(cout, p[j]);
+		
+	}
+
+
+	maximum(p, n);
+	maximum_r(p, n);
+	search_name(p, n);
+	search_id(p, n);
+}
+
+
+
+
+
+void maximum(player* p, int n)
+{
+	int i, j;
+	int wi = 0;
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n - 1; j++)
+		{
+			if (p[j].getp_wickets() > p[j + 1].getp_wickets())
+			{
+				wi = p[j].getp_wickets();
+				p[j].setp_wickets(p[j + 1].getp_wickets());
+				p[j + 1].setp_wickets(wi);
+
+			}
+		}
+
+	}
+
+	cout << "\nMaximum wickets:";
+	cout<<p[j].getp_wickets()<<"\n";
+	
+
+
+}
+
+
+void maximum_r(player* p, int n)
+{
+	int i, j;
+	
+	int ru = 0;
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n - 1; j++)
+		{
+			if (p[j].getp_runs() > p[j + 1].getp_runs())
+			{
+				ru = p[j].getp_runs();
+				p[j].setp_runs(p[j + 1].getp_runs());
+				p[j + 1].setp_runs(ru);
+
+			}
+		}
+
+	}
+
+	cout << "\nMaximum runs:";
+	cout << p[j].getp_runs() << "\n";
+	
+
+
+}
+
+
+
+void search_name(player* p, int n)
+{
+
+
+	char y[20];
+	int i = 0, result = 1;
+	int flag1 = 0;
+	cout<<"\nenter the name to be searched:";
+	cin>>y;
+
+	for (i = 0; i < n; i++)
+	{
+
+		result = strcmp(y, p[i].getp_name());
+		if (result == 0)
+		{
+			flag1 = 1;
+
+			break;
+		}
+
+	}
+
+	if (flag1 == 1)
+	{
+               cout<<"\nplayer name  is found\n";
+	}
+	else
+	{
+		cout << "\nplayer name  is not found\n";
+	}
+
+
+}
+
+
+
+void search_id(player* p, int n)
+{
+
+
+	int y;
+	int i = 0;
+	int flag1 = 0;
+	cout << "\nenter the id to be searched:";
+	cin >> y;
+
+	for (i = 0; i < n; i++)
+	{
+
+		if (p[i].getp_id()==y)
+		{
+			flag1 = 1;
+
+			break;
+		}
+
+	}
+
+	if (flag1 == 1)
+	{
+		cout << "\nplayer id " << y << " is founded\n";
+	}
+	else
+	{
+		cout << "\nplayer id " << y << " is not founded\n";
+	}
+
+
+}
+
+
+
+void operator<<(ostream& o, player& p)
+{
+	
+	o<< "\tPlayer id=" << p.p_id << "\n";
+	o << "\tPlayer name=" << p.p_name << "\n";
+	o << "\tPlayer role=" << p.p_role << "\n";
+    o << "\tPlayer runs=" << p.p_runs << "\n";
+	o << "\tPlayer wickets=" << p.p_wickets << "\n";
+	o << "\tPlayer innings=" << p.p_inning << "\n";
+	o << "\n\n";
+
+}
+void operator>>(istream& i, player& p)
+{
+	int j,n;
+	int id, ru, wi, in;
+	char nm[20], ro[20];
+	
+
+
+		
+		cout << "Enter the player id:";
+		i >> id;
+		cout << "Enter the player name:";
+		i >> nm;
+		cout << "Enter the player role:";
+		i >> ro;
+		cout << "Enter the player runs:";
+		i >> ru;
+		cout << "Enter the player wickets:";
+		i >> wi;
+		cout << "Enter the player innings:";
+		i >> in;
+		cout << "\n\n";
+		p.p_id=id;
+		strcpy(p.p_name,nm);
+		strcpy(p.p_role, ro);
+		p.p_runs=ru;
+		p.p_wickets=wi;
+		p.p_inning=in;
+
+}
+
+
+
